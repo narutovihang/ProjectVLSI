@@ -1,0 +1,20 @@
+*** SPICE deck for cell cell2{lay} from library SRAM_8x8
+*** Created on Sat Mar 21, 2015 16:10:37
+*** Last revised on Wed Apr 01, 2015 19:37:11
+*** Written on Wed Apr 01, 2015 19:37:25 by Electric VLSI Design System, 
+*** version 9.05
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** TOP LEVEL CELL: cell2{lay}
+Mnmos@0 q n gnd gnd NMOS L=0.6U W=11.25U AS=19.012P AD=12.652P PS=37.65U 
++PD=17.15U
+Mnmos@1 gnd q n gnd NMOS L=0.6U W=11.25U AS=12.562P AD=19.012P PS=16.95U 
++PD=37.65U
+Mnmos@4 Bb W q gnd NMOS L=0.6U W=4.5U AS=12.652P AD=12.42P PS=17.15U PD=24.6U
+Mnmos@5 B W n gnd NMOS L=0.6U W=4.5U AS=12.562P AD=6.075P PS=16.95U PD=13.5U
+Mpmos@0 q n vdd vdd PMOS L=0.6U W=3U AS=11.588P AD=12.652P PS=21.15U 
++PD=17.15U
+Mpmos@1 vdd q n vdd PMOS L=0.6U W=3U AS=12.562P AD=11.588P PS=16.95U 
++PD=21.15U
+.END

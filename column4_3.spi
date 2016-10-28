@@ -1,0 +1,276 @@
+*** SPICE deck for cell column4_3{lay} from library SRAM_8x8
+*** Created on Sat Mar 28, 2015 15:08:23
+*** Last revised on Wed Apr 01, 2015 22:43:18
+*** Written on Wed Apr 01, 2015 22:43:24 by Electric VLSI Design System, 
+*** version 9.05
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SRAM_2__cell2 FROM CELL SRAM_2:cell2{lay}
+.SUBCKT SRAM_2__cell2 B Bb gnd n q vdd W
+Mnmos@0 q n gnd gnd NMOS L=0.6U W=11.25U AS=19.012P AD=12.652P PS=37.65U 
++PD=17.15U
+Mnmos@1 gnd q n gnd NMOS L=0.6U W=11.25U AS=12.562P AD=19.012P PS=16.95U 
++PD=37.65U
+Mnmos@4 Bb W q gnd NMOS L=0.6U W=4.5U AS=12.652P AD=12.42P PS=17.15U PD=24.6U
+Mnmos@5 B W n gnd NMOS L=0.6U W=4.5U AS=12.562P AD=6.075P PS=16.95U PD=13.5U
+Mpmos@0 q n vdd vdd PMOS L=0.6U W=3U AS=11.588P AD=12.652P PS=21.15U 
++PD=17.15U
+Mpmos@1 vdd q n vdd PMOS L=0.6U W=3U AS=12.562P AD=11.588P PS=16.95U 
++PD=21.15U
+.ENDS SRAM_2__cell2
+
+*** SUBCIRCUIT SRAM_8x8__NAND3 FROM CELL SRAM_8x8:NAND3{lay}
+.SUBCKT SRAM_8x8__NAND3 A ABC B C gnd vdd
+Mncc@2 net@3 A ABC gnd NMOS L=0.6U W=3U AS=8.213P AD=2.7P PS=10.05U PD=4.8U
+Mnmos@0 net@4 B net@3 gnd NMOS L=0.6U W=3U AS=2.7P AD=2.7P PS=4.8U PD=4.8U
+Mnmos@2 gnd C net@4 gnd NMOS L=0.6U W=3U AS=2.7P AD=25.2P PS=4.8U PD=37.8U
+Mpmos@0 ABC A vdd vdd PMOS L=0.6U W=4.5U AS=14.55P AD=8.213P PS=18.8U 
++PD=10.05U
+Mpmos@1 vdd B ABC vdd PMOS L=0.6U W=4.5U AS=8.213P AD=14.55P PS=10.05U 
++PD=18.8U
+Mpmos@2 ABC C vdd vdd PMOS L=0.6U W=4.5U AS=14.55P AD=8.213P PS=18.8U 
++PD=10.05U
+.ENDS SRAM_8x8__NAND3
+
+*** SUBCIRCUIT inverter1__inv FROM CELL inverter1:inv{lay}
+.SUBCKT inverter1__inv gnd in out vdd
+Mnmos@0 out in gnd gnd NMOS L=0.6U W=3U AS=10.35P AD=6.75P PS=18.9U PD=12.6U
+Mpmos@0 out in vdd vdd PMOS L=0.6U W=6U AS=12.6P AD=6.75P PS=24.6U PD=12.6U
+.ENDS inverter1__inv
+
+*** SUBCIRCUIT SRAM_8x8__decoder_2 FROM CELL SRAM_8x8:decoder_2{lay}
+.SUBCKT SRAM_8x8__decoder_2 A B C Den gnd I0 I1 I2 I3 I4 I5 I6 I7 vdd
+XNAND3@0 net@721 I0 net@724 net@727 gnd vdd SRAM_8x8__NAND3
+XNAND3@1 net@721 I1 net@724 net@10 gnd vdd SRAM_8x8__NAND3
+XNAND3@2 net@721 I2 net@5 net@727 gnd vdd SRAM_8x8__NAND3
+XNAND3@3 net@721 I3 net@5 net@10 gnd vdd SRAM_8x8__NAND3
+XNAND3@5 net@1 I4 net@724 net@727 gnd vdd SRAM_8x8__NAND3
+XNAND3@6 net@1 I5 net@724 net@10 gnd vdd SRAM_8x8__NAND3
+XNAND3@7 net@1 I6 net@5 net@727 gnd vdd SRAM_8x8__NAND3
+XNAND3@8 net@1 I7 net@5 net@10 gnd vdd SRAM_8x8__NAND3
+Xinv@0 gnd Den net@22 vdd inverter1__inv
+Xinv@1 gnd net@1 net@721 vdd inverter1__inv
+Xinv@2 gnd net@5 net@724 vdd inverter1__inv
+Xinv@3 gnd net@10 net@727 vdd inverter1__inv
+Mnmos@0 A Den net@1 gnd NMOS L=0.6U W=0.9U AS=2.52P AD=7.02P PS=6.6U PD=15.6U
+Mnmos@1 B Den net@5 gnd NMOS L=0.6U W=0.9U AS=2.52P AD=7.02P PS=6.6U PD=15.6U
+Mnmos@2 C Den net@10 gnd NMOS L=0.6U W=0.9U AS=2.52P AD=7.02P PS=6.6U 
++PD=15.6U
+Mpmos@0 A net@22 net@1 vdd PMOS L=0.6U W=0.9U AS=2.52P AD=7.02P PS=6.6U 
++PD=15.6U
+Mpmos@1 B net@22 net@5 vdd PMOS L=0.6U W=0.9U AS=2.52P AD=7.02P PS=6.6U 
++PD=15.6U
+Mpmos@2 C net@22 net@10 vdd PMOS L=0.6U W=0.9U AS=2.52P AD=7.02P PS=6.6U 
++PD=15.6U
+.ENDS SRAM_8x8__decoder_2
+
+*** SUBCIRCUIT SRAM_8x8__sense_amp_2 FROM CELL SRAM_8x8:sense_amp_2{lay}
+.SUBCKT SRAM_8x8__sense_amp_2 B Bb D gnd Q SAE vdd WE
+Mnmos@6 net@211 Q net@136 gnd NMOS L=0.6U W=3U AS=63.225P AD=7.545P PS=73.95U 
++PD=16.2U
+Mnmos@7 net@211 net@136 Q gnd NMOS L=0.6U W=3U AS=63.225P AD=7.545P PS=73.95U 
++PD=16.2U
+Mnmos@8 gnd SAE net@211 gnd NMOS L=0.6U W=3U AS=7.545P AD=77.422P PS=16.2U 
++PD=95.85U
+Mnmos@12 net@275 WE net@136 gnd NMOS L=0.6U W=67.5U AS=63.225P AD=61.155P 
++PS=73.95U PD=136.8U
+Mnmos@13 gnd D net@275 gnd NMOS L=0.6U W=67.5U AS=61.155P AD=77.422P 
++PS=136.8U PD=95.85U
+Mnmos@14 net@281 WE Q gnd NMOS L=0.6U W=67.5U AS=63.225P AD=61.222P PS=73.95U 
++PD=136.95U
+Mnmos@15 gnd net@546 net@281 gnd NMOS L=0.6U W=67.5U AS=61.222P AD=77.422P 
++PS=136.95U PD=95.85U
+Mnmos@16 gnd D net@546 gnd NMOS L=0.6U W=3U AS=7.425P AD=77.422P PS=12.3U 
++PD=95.85U
+Mpmos@6 vdd Q net@136 vdd PMOS L=0.6U W=3U AS=63.225P AD=19.2P PS=73.95U 
++PD=28.6U
+Mpmos@7 vdd net@136 Q vdd PMOS L=0.6U W=3U AS=63.225P AD=19.2P PS=73.95U 
++PD=28.6U
+Mpmos@10 net@136 SAE B vdd PMOS L=0.6U W=67.5U AS=166.5P AD=63.225P PS=201.6U 
++PD=73.95U
+Mpmos@11 Q SAE Bb vdd PMOS L=0.6U W=67.5U AS=144P AD=63.225P PS=171.6U 
++PD=73.95U
+Mpmos@12 vdd D net@546 vdd PMOS L=0.6U W=6U AS=7.425P AD=19.2P PS=12.3U 
++PD=28.6U
+.ENDS SRAM_8x8__sense_amp_2
+
+*** TOP LEVEL CELL: SRAM_8x8:column4_3{lay}
+Xcell2@0 net@99 net@106 gnd cell2@0_n cell2@0_q vdd n0 SRAM_2__cell2
+Xcell2@1 net@99 net@106 gnd cell2@1_n cell2@1_q vdd n1 SRAM_2__cell2
+Xcell2@2 net@99 net@106 gnd cell2@2_n cell2@2_q vdd net@2508 SRAM_2__cell2
+Xcell2@3 net@99 net@106 gnd cell2@3_n cell2@3_q vdd net@1904 SRAM_2__cell2
+Xcell2@4 net@99 net@106 gnd p40 o40 vdd net@2538 SRAM_2__cell2
+Xcell2@5 net@99 net@106 gnd p50 o50 vdd net@2515 SRAM_2__cell2
+Xcell2@6 net@99 net@106 gnd cell2@6_n cell2@6_q vdd net@2517 SRAM_2__cell2
+Xcell2@7 net@99 net@106 gnd p70 o70 vdd net@1971 SRAM_2__cell2
+Xcell2@8 net@114 net@120 gnd cell2@8_n cell2@8_q vdd n0 SRAM_2__cell2
+Xcell2@9 net@114 net@120 gnd cell2@9_n cell2@9_q vdd n1 SRAM_2__cell2
+Xcell2@10 net@114 net@120 gnd cell2@10_n cell2@10_q vdd net@2508 
++SRAM_2__cell2
+Xcell2@11 net@114 net@120 gnd cell2@11_n cell2@11_q vdd net@1904 
++SRAM_2__cell2
+Xcell2@12 net@114 net@120 gnd net@2446 cell2@12_q vdd net@2538 SRAM_2__cell2
+Xcell2@13 net@114 net@120 gnd p51 o51 vdd net@2515 SRAM_2__cell2
+Xcell2@14 net@114 net@120 gnd cell2@14_n cell2@14_q vdd net@2517 
++SRAM_2__cell2
+Xcell2@15 net@114 net@120 gnd p71 cell2@15_q vdd net@1971 SRAM_2__cell2
+Xcell2@24 net@127 net@134 gnd cell2@24_n cell2@24_q vdd n0 SRAM_2__cell2
+Xcell2@25 net@127 net@134 gnd cell2@25_n cell2@25_q vdd n1 SRAM_2__cell2
+Xcell2@26 net@127 net@134 gnd cell2@26_n cell2@26_q vdd net@2508 
++SRAM_2__cell2
+Xcell2@27 net@127 net@134 gnd cell2@27_n cell2@27_q vdd net@1904 
++SRAM_2__cell2
+Xcell2@28 net@127 net@134 gnd p42 cell2@28_q vdd net@2538 SRAM_2__cell2
+Xcell2@29 net@127 net@134 gnd p52 o52 vdd net@2515 SRAM_2__cell2
+Xcell2@30 net@127 net@134 gnd cell2@30_n cell2@30_q vdd net@2517 
++SRAM_2__cell2
+Xcell2@31 net@127 net@134 gnd p72 cell2@31_q vdd net@1971 SRAM_2__cell2
+Xcell2@32 net@141 net@148 gnd cell2@32_n cell2@32_q vdd n0 SRAM_2__cell2
+Xcell2@33 net@141 net@148 gnd cell2@33_n cell2@33_q vdd n1 SRAM_2__cell2
+Xcell2@34 net@141 net@148 gnd cell2@34_n cell2@34_q vdd net@2508 
++SRAM_2__cell2
+Xcell2@35 net@141 net@148 gnd cell2@35_n cell2@35_q vdd net@1904 
++SRAM_2__cell2
+Xcell2@36 net@141 net@148 gnd p43 o43 vdd net@2538 SRAM_2__cell2
+Xcell2@37 net@141 net@148 gnd p53 o53 vdd net@2515 SRAM_2__cell2
+Xcell2@38 net@141 net@148 gnd cell2@38_n cell2@38_q vdd net@2517 
++SRAM_2__cell2
+Xcell2@39 net@141 net@148 gnd p73 cell2@39_q vdd net@1971 SRAM_2__cell2
+Xcell2@40 net@159 net@162 gnd cell2@40_n cell2@40_q vdd n0 SRAM_2__cell2
+Xcell2@41 net@159 net@162 gnd cell2@41_n cell2@41_q vdd n1 SRAM_2__cell2
+Xcell2@42 net@159 net@162 gnd cell2@42_n cell2@42_q vdd net@2508 
++SRAM_2__cell2
+Xcell2@43 net@159 net@162 gnd cell2@43_n cell2@43_q vdd net@1904 
++SRAM_2__cell2
+Xcell2@44 net@159 net@162 gnd p44 o44 vdd net@2538 SRAM_2__cell2
+Xcell2@45 net@159 net@162 gnd net@2452 cell2@45_q vdd net@2515 SRAM_2__cell2
+Xcell2@46 net@159 net@162 gnd cell2@46_n cell2@46_q vdd net@2517 
++SRAM_2__cell2
+Xcell2@47 net@159 net@162 gnd p74 cell2@47_q vdd net@1971 SRAM_2__cell2
+Xcell2@48 net@170 net@177 gnd cell2@48_n cell2@48_q vdd n0 SRAM_2__cell2
+Xcell2@49 net@170 net@177 gnd cell2@49_n cell2@49_q vdd n1 SRAM_2__cell2
+Xcell2@50 net@170 net@177 gnd cell2@50_n cell2@50_q vdd net@2508 
++SRAM_2__cell2
+Xcell2@51 net@170 net@177 gnd cell2@51_n cell2@51_q vdd net@1904 
++SRAM_2__cell2
+Xcell2@52 net@170 net@177 gnd p45 cell2@52_q vdd net@2538 SRAM_2__cell2
+Xcell2@53 net@170 net@177 gnd p55 cell2@53_q vdd net@2515 SRAM_2__cell2
+Xcell2@54 net@170 net@177 gnd cell2@54_n cell2@54_q vdd net@2517 
++SRAM_2__cell2
+Xcell2@55 net@170 net@177 gnd p75 cell2@55_q vdd net@1971 SRAM_2__cell2
+Xcell2@56 net@184 net@190 gnd cell2@56_n cell2@56_q vdd n0 SRAM_2__cell2
+Xcell2@57 net@184 net@190 gnd cell2@57_n cell2@57_q vdd n1 SRAM_2__cell2
+Xcell2@58 net@184 net@190 gnd cell2@58_n cell2@58_q vdd net@2508 
++SRAM_2__cell2
+Xcell2@59 net@184 net@190 gnd cell2@59_n cell2@59_q vdd net@1904 
++SRAM_2__cell2
+Xcell2@60 net@184 net@190 gnd p46 cell2@60_q vdd net@2538 SRAM_2__cell2
+Xcell2@61 net@184 net@190 gnd p56 cell2@61_q vdd net@2515 SRAM_2__cell2
+Xcell2@62 net@184 net@190 gnd cell2@62_n cell2@62_q vdd net@2517 
++SRAM_2__cell2
+Xcell2@63 net@184 net@190 gnd p76 cell2@63_q vdd net@1971 SRAM_2__cell2
+Xcell2@64 net@252 net@257 gnd cell2@64_n cell2@64_q vdd n0 SRAM_2__cell2
+Xcell2@65 net@252 net@257 gnd cell2@65_n cell2@65_q vdd n1 SRAM_2__cell2
+Xcell2@66 net@252 net@257 gnd cell2@66_n cell2@66_q vdd net@2508 
++SRAM_2__cell2
+Xcell2@67 net@252 net@257 gnd cell2@67_n cell2@67_q vdd net@1904 
++SRAM_2__cell2
+Xcell2@68 net@252 net@257 gnd p47 cell2@68_q vdd net@2538 SRAM_2__cell2
+Xcell2@69 net@252 net@257 gnd p57 cell2@69_q vdd net@2515 SRAM_2__cell2
+Xcell2@70 net@252 net@257 gnd cell2@70_n cell2@70_q vdd net@2517 
++SRAM_2__cell2
+Xcell2@71 net@252 net@257 gnd p77 cell2@71_q vdd net@1971 SRAM_2__cell2
+Xdecoder_@1 A B C DEN gnd net@0 net@2 net@7 net@1988 net@15 net@18 net@23 
++net@1999 vdd SRAM_8x8__decoder_2
+Xinv@0 gnd net@0 n0 vdd inverter1__inv
+Xinv@1 gnd net@2 n1 vdd inverter1__inv
+Xinv@2 gnd net@7 net@2508 vdd inverter1__inv
+Xinv@3 gnd net@1988 net@1904 vdd inverter1__inv
+Xinv@4 gnd net@15 net@2538 vdd inverter1__inv
+Xinv@5 gnd net@18 net@2515 vdd inverter1__inv
+Xinv@6 gnd net@23 net@2517 vdd inverter1__inv
+Xinv@7 gnd net@1999 net@1971 vdd inverter1__inv
+Mpmos@0 vdd P net@99 vdd PMOS L=0.6U W=42U AS=88.2P AD=104.4P PS=46.2U 
++PD=120.9U
+Mpmos@1 net@106 P vdd vdd PMOS L=0.6U W=42U AS=104.4P AD=88.2P PS=120.9U 
++PD=46.2U
+Mpmos@2 vdd P net@114 vdd PMOS L=0.6U W=42U AS=88.2P AD=104.4P PS=46.2U 
++PD=120.9U
+Mpmos@3 net@120 P vdd vdd PMOS L=0.6U W=42U AS=104.4P AD=88.2P PS=120.9U 
++PD=46.2U
+Mpmos@4 vdd P net@127 vdd PMOS L=0.6U W=42U AS=88.2P AD=104.4P PS=46.2U 
++PD=120.9U
+Mpmos@5 net@134 P vdd vdd PMOS L=0.6U W=42U AS=104.4P AD=88.2P PS=120.9U 
++PD=46.2U
+Mpmos@8 vdd P net@159 vdd PMOS L=0.6U W=42U AS=88.2P AD=104.4P PS=46.2U 
++PD=120.9U
+Mpmos@9 net@162 P vdd vdd PMOS L=0.6U W=42U AS=104.4P AD=88.2P PS=120.9U 
++PD=46.2U
+Mpmos@10 vdd P net@170 vdd PMOS L=0.6U W=42U AS=88.2P AD=104.4P PS=46.2U 
++PD=120.9U
+Mpmos@11 net@177 P vdd vdd PMOS L=0.6U W=42U AS=104.4P AD=88.2P PS=120.9U 
++PD=46.2U
+Mpmos@12 vdd P net@184 vdd PMOS L=0.6U W=42U AS=88.2P AD=104.4P PS=46.2U 
++PD=120.9U
+Mpmos@13 net@190 P vdd vdd PMOS L=0.6U W=42U AS=104.4P AD=88.2P PS=120.9U 
++PD=46.2U
+Mpmos@14 vdd P net@252 vdd PMOS L=0.6U W=42U AS=88.2P AD=104.4P PS=46.2U 
++PD=120.9U
+Mpmos@15 net@257 P vdd vdd PMOS L=0.6U W=42U AS=104.4P AD=88.2P PS=120.9U 
++PD=46.2U
+Mpmos@16 net@99 P net@106 vdd PMOS L=0.6U W=42U AS=88.2P AD=88.2P PS=46.2U 
++PD=46.2U
+Mpmos@17 net@114 P net@120 vdd PMOS L=0.6U W=42U AS=88.2P AD=88.2P PS=46.2U 
++PD=46.2U
+Mpmos@18 net@127 P net@134 vdd PMOS L=0.6U W=42U AS=88.2P AD=88.2P PS=46.2U 
++PD=46.2U
+Mpmos@20 net@159 P net@162 vdd PMOS L=0.6U W=42U AS=88.2P AD=88.2P PS=46.2U 
++PD=46.2U
+Mpmos@21 net@170 P net@177 vdd PMOS L=0.6U W=42U AS=88.2P AD=88.2P PS=46.2U 
++PD=46.2U
+Mpmos@22 net@184 P net@190 vdd PMOS L=0.6U W=42U AS=88.2P AD=88.2P PS=46.2U 
++PD=46.2U
+Mpmos@23 net@252 P net@257 vdd PMOS L=0.6U W=42U AS=88.2P AD=88.2P PS=46.2U 
++PD=46.2U
+Mpmos@24 vdd P net@141 vdd PMOS L=0.6U W=42U AS=88.2P AD=104.4P PS=46.2U 
++PD=120.9U
+Mpmos@25 net@148 P vdd vdd PMOS L=0.6U W=42U AS=104.4P AD=88.2P PS=120.9U 
++PD=46.2U
+Mpmos@26 net@141 P net@148 vdd PMOS L=0.6U W=42U AS=88.2P AD=88.2P PS=46.2U 
++PD=46.2U
+Xsense_am@5 net@99 net@106 d0 gnd q0 SAE vdd WE SRAM_8x8__sense_amp_2
+Xsense_am@6 net@114 net@120 d1 gnd q1 SAE vdd WE SRAM_8x8__sense_amp_2
+Xsense_am@8 net@127 net@134 d2 gnd q2 SAE vdd WE SRAM_8x8__sense_amp_2
+Xsense_am@9 net@141 net@148 d3 gnd q3 SAE vdd WE SRAM_8x8__sense_amp_2
+Xsense_am@10 net@159 net@162 d4 gnd q4 SAE vdd WE SRAM_8x8__sense_amp_2
+Xsense_am@11 net@170 net@177 d5 gnd q5 SAE vdd WE SRAM_8x8__sense_amp_2
+Xsense_am@12 net@184 net@190 d6 gnd q6 SAE vdd WE SRAM_8x8__sense_amp_2
+Xsense_am@13 net@252 net@257 d7 gnd q7 SAE vdd WE SRAM_8x8__sense_amp_2
+
+* Spice Code nodes in cell cell 'SRAM_8x8:column4_3{lay}'
+vdd vdd 0 dc 5
+va A 0 DC 0 pwl 100n 0 110n 5 150n 5 160n 0 200n 0 210n 5
+vb B 0 DC 0 pwl 100n 5 110n 0 200n 0 210n 5 350n 5 360n 0 500n 0 510n 5
+vc C 0 DC 0 pwl 100n 0 110n 5 350n 5 360n 0 500n 0 510n 5
+vp P 0 DC 0 pwl 50n 5 60n 0 100n 0 110n 5 200n 5 210n 0 250n 0 260n 5 350n 5 
++360n 0 400n 0 410n 5 500n 5 510n 0 550n 0 560n 5
+vwe WE 0 DC 0 pwl 100n 5 110n 0 250n 0 260n 5 300n 5 310n 0
+vsae SAE 0 DC 0 pwl 100n 5 110n 0 150n 0 160n 5 250n 5 260n 0 300n 0 310n 5 
++400n 5 410n 0 450n 0 460n 5 550n 5 560n 0 600n 0 610n 5
+vden DEN 0 dc 0 pwl 100n 0 110n 5 150n 5 160n 0 250n 0 260n 5 300n 5 310n 0 
++400n 0 410n 5 450n 5 460n 0 550n 0 560n 5 600n 5 610n 0
+vd0 d0 0 dc 0 pwl 200n 0 210n 5 300n 5 310n 0
+vd1 d1 0 dc 0 pwl 200n 0 210n 5 300n 5 310n 0
+vd2 d2 0 dc 0 pwl 200n 0 210n 5 300n 5 310n 0
+vd3 d3 0 dc 0 pwl 200n 0 210n 5 300n 5 310n 0
+vd4 d4 0 dc 0 pwl 200n 0 210n 5 300n 5 310n 0
+vd5 d5 0 dc 0 pwl 200n 0 210n 5 300n 5 310n 0
+vd6 d6 0 dc 0 pwl 200n 0 210n 5 300n 5 310n 0
+vd7 d7 0 dc 0 pwl 200n 0 210n 5 300n 5 310n 0
+.IC V(p50)=0 V(p51)=0 V(p52)=0 V(p53)=0 V(p54)=0 V(p55)=0 V(p56)=0 V(p57)=0 
++V(p40)=0 V(p41)=0 V(p42)=0 V(p43)=0 V(p44)=0 V(p45)=0 V(p46)=0 V(p47)=0 
++V(p70)=0 V(p71)=0 V(p72)=0 V(p73)=0 V(p74)=0 V(p75)=0 V(p76)=0 V(p77)=0
+.tran 0 800ns
+.include C5_models.txt
+.END

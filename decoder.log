@@ -1,0 +1,13 @@
+Circuit: *** SPICE deck for cell decoder{sch} from library SRAM_8x8
+
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+WARNING: Node DEN is floating.
+
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Fatal Error: BSIM3: mosfet Mpmos@2, model pmos: Effective channel width <= 0
